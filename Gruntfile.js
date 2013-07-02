@@ -8,6 +8,8 @@
 
 'use strict';
 
+var dss = require('dss');
+
 module.exports = function(grunt) {
 
 	// Project configuration.
@@ -32,7 +34,25 @@ module.exports = function(grunt) {
 		dss: {
 			docs: {
 				options: {
-					template: 'test/fixtures/template/'
+					template: 'test/fixtures/template/',
+					parsers: {
+						// Describe parsing a state
+						state: function(i, line, block){
+							var state = line.split(' - ');
+							return {
+								name: (state[0]) ? dss.trim(state[0]) : '',
+								escaped: (state[0]) ? dss.trim(state[0].replace('.', ' ').replace(':', ' is-')) : '',
+								description: (state[1]) ? dss.trim(state[1]) : ''
+							};
+						},
+						// Finds @link in comment blocks
+						link: function(i, line, block){
+							// Replace link with HTML wrapped version
+							var exp = /(b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+							line.replace(exp, "<a href='$1'>$1</a>");
+							return line;
+						}
+					}
 				},
 				files: {
 					'tmp2/':['test/fixtures/*.{css,scss,sass,less,styl}']
