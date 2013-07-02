@@ -17,8 +17,8 @@
   },
   "licenses": [
     {
-      "type": "GNU",
-      "url": "/blob/master/LICENSE-GNU"
+      "type": "MIT",
+      "url": "/blob/master/LICENSE-MIT"
     }
   ],
   "main": "Gruntfile.js",
