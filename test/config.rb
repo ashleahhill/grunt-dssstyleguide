@@ -1,3 +1,3 @@
 
-sass_dir = 'test/fixtures'
-css_dir = 'tmp'
+sass_dir = 'fixtures'
+css_dir = '../tmp'

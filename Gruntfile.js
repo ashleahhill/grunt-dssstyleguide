@@ -20,7 +20,7 @@ module.exports = function(grunt) {
       ],
       options: {
         jshintrc: '.jshintrc',
-      },
+      }
     },
 
     // Before generating any new files, remove any previously-created files.
@@ -51,7 +51,7 @@ module.exports = function(grunt) {
     // Unit tests.
     nodeunit: {
       tests: ['test/*_test.js'],
-    },
+    }
 
   });
 
