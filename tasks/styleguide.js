@@ -20,6 +20,8 @@ module.exports = function(grunt) {
       separator: ', '
     });
 
+    grunt.task.run(['compass', 'dss']);
+    
     // Iterate over all specified file groups.
     this.files.forEach(function(f) {
       // Concat specified files.

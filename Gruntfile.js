@@ -10,66 +10,114 @@
 
 module.exports = function(grunt) {
 
-  // Project configuration.
-  grunt.initConfig({
-    jshint: {
-      all: [
-        'Gruntfile.js',
-        'tasks/*.js',
-        '<%= nodeunit.tests %>',
-      ],
-      options: {
-        jshintrc: '.jshintrc',
-      }
-    },
+	// Project configuration.
+	grunt.initConfig({
+		jshint: {
+			all: [
+				'Gruntfile.js',
+				'tasks/*.js',
+				'<%= nodeunit.tests %>',
+			],
+			options: {
+				jshintrc: '.jshintrc',
+			}
+		},
 
-    // Before generating any new files, remove any previously-created files.
-    clean: {
-      tests: ['tmp'],
-    },
+		// Before generating any new files, remove any previously-created files.
+		clean: {
+			tests: ['tmp','tmp2'],
+		},
 
-    // Configuration to be run (and then tested).
-    styleguide: {
-      default_options: {
-        options: {
-        },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!',
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
-    },
+		// dss config
+		dss: {
+			docs: {
+				options: {
+					template: 'test/fixtures/template/'
+				},
+				files: {
+					'tmp2/':['test/fixtures/*.{css,scss,sass,less,styl}']
+				}
+			}
+		},
 
-    // Unit tests.
-    nodeunit: {
-      tests: ['test/*_test.js'],
-    }
+		// compass config
+		compass: {
+			options: {
+				//config is relative to this file, not config file
+				config: 'test/config.rb'
+			},
+			dss:{
+				options:{
+					sassDir: 'test/fixtures/template/assets/source',
+					cssDir:  'test/fixtures/template/assets/css'
+				}
+			},
+			test:{}
+		},
 
-  });
+		// Configuration to be run (and then tested).
+		styleguide: {
+			default_options: {
+				options: {
+				},
+				files: {
+					'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
+				},
+			},
+			custom_options: {
+				options: {
+					separator: ': ',
+					punctuation: ' !!!',
+				},
+				files: {
+					'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
+				},
+			},
+		},
 
-  // Actually load this plugin's task(s).
-  grunt.loadTasks('tasks');
+		// Configuration to be run (and then tested).
+		styleguide_template: {
+			default_options: {
+				options: {
+				},
+				files: {
+					'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
+				},
+			},
+			custom_options: {
+				options: {
+					separator: ': ',
+					punctuation: ' !!!',
+				},
+				files: {
+					'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
+				},
+			},
+		},
 
-  // These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-compass');
-  grunt.loadNpmTasks('grunt-contrib-jade');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+		// Unit tests.
+		nodeunit: {
+			tests: ['test/*_test.js'],
+		}
 
-  // Whenever the "test" task is run, first clean the "tmp" dir, then run this
-  // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'styleguide', 'nodeunit']);
+	});
 
-  // By default, lint and run all tests.
-  grunt.registerTask('default', ['jshint', 'test']);
+	// Actually load this plugin's task(s).
+	grunt.loadTasks('tasks');
+
+	// These plugins provide necessary tasks.
+	grunt.loadNpmTasks('grunt-dss');
+	grunt.loadNpmTasks('grunt-contrib-compass');
+	grunt.loadNpmTasks('grunt-contrib-jade');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-nodeunit');
+
+	// Whenever the "test" task is run, first clean the "tmp" dir, then run this
+	// plugin's task(s), then test the result.
+	grunt.registerTask('test', ['clean', 'styleguide', 'nodeunit']);
+
+	// By default, lint and run all tests.
+	grunt.registerTask('default', ['jshint', 'test']);
 
 };
