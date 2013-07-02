@@ -3,7 +3,7 @@
  * 
  *
  * Copyright (c) 2013 Ashley Hill
- * Licensed under the GNU license.
+ * Licensed under the MIT license.
  */
 
 'use strict';

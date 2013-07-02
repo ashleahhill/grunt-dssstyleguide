@@ -1,6 +1,6 @@
 # grunt-styleguide
 
-> lazy styleguide
+Generate a styleguide using [grunt-dss](https://github.com/darcyclarke/grunt-dss) and [grunt-contrib-compass](https://github.com/gruntjs/grunt-contrib-compass/)
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
