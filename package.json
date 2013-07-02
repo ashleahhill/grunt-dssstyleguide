@@ -34,7 +34,8 @@
     "grunt-contrib-nodeunit": "~0.2.0",
     "grunt": "~0.4.1",
     "grunt-contrib-compass": "~0.3.0",
-    "grunt-contrib-jade": "~0.7.0"
+    "grunt-contrib-jade": "~0.7.0",
+    "grunt-dss": "git://github.com/darcyclarke/grunt-dss.git"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"
