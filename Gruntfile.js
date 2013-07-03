@@ -25,22 +25,47 @@ module.exports = function(grunt) {
 
 		// Before generating any new files, remove any previously-created files.
 		clean: {
-			tests: ['tmp','tmp2','tmp3']
+			tests: [
+				'tmp*'
+			]
 		},
 
 		// Configuration to be run (and then tested).
 		styleguide: {
-			dev: {},
+			dev: {
+				options: {
+					compass: {
+						config: 'test/config.rb',
+						sassDir: 'test/fixtures/template/assets/source',
+						cssDir: 'test/fixtures/template/assets/css',
+						force: true
+					},
+					dss: {
+						options: {
+							template: 'test/fixtures/template/'
+						},
+						files: {
+							'tmp_dev/': ['test/fixtures/*.{css,scss,sass,less,styl}']
+						}
+					}
+				}
+			},
 			dist: {
 				options: {
 					compass: {
-						outputStyle:'compact',
-						noLineComments:true,
-						force:true
+						config: 'test/config.rb',
+						sassDir: 'test/fixtures/template/assets/source',
+						cssDir: 'test/fixtures/template/assets/css',
+						outputStyle: 'compact',
+						noLineComments: true,
+						force: true
 					},
 					dss: {
+						options: {
+							template: 'test/fixtures/template/'
+						},
 						files: {
-							'tmp3/':['test/fixtures/*.{css,scss,sass,less,styl}']
+							'tmp_dist/': ['test/fixtures/*.{css,scss,sass,less,styl}']
 						}
 					}
 				}
@@ -49,7 +74,7 @@ module.exports = function(grunt) {
 
 		// Unit tests.
 		nodeunit: {
-			tests: ['test/*_test.js'],
+			tests: ['test/*_test.js']
 		}
 
 	});
@@ -63,14 +88,13 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
-	// Whenever the "test" task is run, first clean the "tmp" dir, then run this
-	// plugin's task(s), then test the result.
+	// Clean tmp dirs, run plugin, test the result.
 	grunt.registerTask('test', ['clean', 'styleguide', 'nodeunit']);
 
+	grunt.registerTask('reset', ['jshint', 'clean']);
+	
 	// By default, lint and run all tests.
-	// grunt.registerTask('default', ['jshint', 'test']);
-
-	grunt.registerTask('dev', ['jshint', 'clean', 'styleguide']);
-	grunt.registerTask('default', ['clean', 'styleguide']);
+	// grunt.registerTask('default', ['clean', 'styleguide']);
+	grunt.registerTask('default', ['jshint', 'test']);
 
 };
