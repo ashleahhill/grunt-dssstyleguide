@@ -1,14 +1,12 @@
 /*
  * grunt-styleguide
- * 
+ * http://ashleyhill.me
  *
  * Copyright (c) 2013 Ashley Hill
- * Licensed under the GNU license.
+ * Licensed under the MIT license.
  */
 
 'use strict';
-
-var dss = require('dss');
 
 module.exports = function(grunt) {
 
@@ -72,6 +70,7 @@ module.exports = function(grunt) {
 	// By default, lint and run all tests.
 	// grunt.registerTask('default', ['jshint', 'test']);
 
-	grunt.registerTask('default', ['jshint', 'clean', 'styleguide']);
+	grunt.registerTask('dev', ['jshint', 'clean', 'styleguide']);
+	grunt.registerTask('default', ['clean', 'styleguide']);
 
 };
