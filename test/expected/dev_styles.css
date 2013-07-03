@@ -1,0 +1,12 @@
+/* Explicit CSS Comment */
+/* line 2, ../source/styles.scss */
+body {
+  color: #110; }
+
+/* line 5, ../source/styles.scss */
+table {
+  border-style: solid; }
+
+/* line 8, ../source/styles.scss */
+td {
+  vertical-align: top; }
