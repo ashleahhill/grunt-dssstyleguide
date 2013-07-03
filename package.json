@@ -43,6 +43,7 @@
   "dependencies": {
     "dss": "~1.0.3",
     "grunt-dss": "git://github.com/darcyclarke/grunt-dss.git",
-    "grunt-contrib-compass": "~0.3.0"
+    "grunt-contrib-compass": "~0.3.0",
+    "underscore": "~1.4.4"
   }
 }
