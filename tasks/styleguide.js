@@ -24,9 +24,7 @@ module.exports = function(grunt) {
 		var compassStyleDocs = {
 			styleDocs: {
 				options: {
-					config:  'test/config.rb',
-					sassDir: 'test/fixtures/template/assets/source',
-					cssDir:  'test/fixtures/template/assets/css'
+					config: 'config.rb'
 				}
 			}
 		};
@@ -34,16 +32,14 @@ module.exports = function(grunt) {
 		var dssStyleDocs = {
 			styleDocs: {
 				options: {
-					template: 'test/fixtures/template/',
+					template: 'template/',
 					parsers: {
 						//default additional parsers are in ./lib/dssParsers
 						state: dssParsers.state,
 						link: dssParsers.link
 					}
 				},
-				files: {
-					'tmp2/':['test/fixtures/*.{css,scss,sass,less,styl}']
-				}
+				files: {}
 			}
 		};
 
