@@ -1,6 +1,6 @@
 /*
  * grunt-styleguide
- * 
+ * http://ashleyhill.me
  *
  * Copyright (c) 2013 Ashley Hill
  * Licensed under the MIT license.
@@ -8,12 +8,13 @@
 
 'use strict';
 
-var dss = require('dss'); // required here for custom parsers
 var _ = require('underscore'); 
 
+//https://github.com/gruntjs/grunt/wiki/Inside-Tasks
 module.exports = function(grunt) {
 
-	//https://github.com/gruntjs/grunt/wiki/Inside-Tasks
+	var dssParsers = require('./lib/dssParsers');
+
 
 	grunt.loadNpmTasks('grunt-dss');
 	grunt.loadNpmTasks('grunt-contrib-compass');
@@ -35,22 +36,9 @@ module.exports = function(grunt) {
 				options: {
 					template: 'test/fixtures/template/',
 					parsers: {
-						// Describe parsing a state
-						state: function(i, line, block){
-							var state = line.split(' - ');
-							return {
-								name: (state[0]) ? dss.trim(state[0]) : '',
-								escaped: (state[0]) ? dss.trim(state[0].replace('.', ' ').replace(':', ' is-')) : '',
-								description: (state[1]) ? dss.trim(state[1]) : ''
-							};
-						},
-						// Finds @link in comment blocks
-						link: function(i, line, block){
-							// Replace link with HTML wrapped version
-							var exp = /(b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-							line.replace(exp, "<a href='$1'>$1</a>");
-							return line;
-						}
+						//default additional parsers are in ./lib/dssParsers
+						state: dssParsers.state,
+						link: dssParsers.link
 					}
 				},
 				files: {
