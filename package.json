@@ -18,7 +18,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "/blob/master/LICENSE-MIT"
+      "url": "ttps://github.com/ashleahhill/grunt-styleguide/blob/master/LICENSE-MIT"
     }
   ],
   "main": "Gruntfile.js",
@@ -32,15 +32,18 @@
     "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-nodeunit": "~0.2.0",
-    "grunt": "~0.4.1",
-    "grunt-contrib-compass": "~0.3.0",
-    "grunt-contrib-jade": "~0.7.0",
-    "grunt-dss": "git://github.com/darcyclarke/grunt-dss.git"
+    "grunt": "~0.4.1"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"
   },
   "keywords": [
     "gruntplugin"
-  ]
+  ],
+  "dependencies": {
+    "dss": "~1.0.3",
+    "grunt-dss": "git://github.com/darcyclarke/grunt-dss.git",
+    "grunt-contrib-compass": "~0.3.0",
+    "underscore": "~1.4.4"
+  }
 }

@@ -27,7 +27,7 @@ exports.styleguide = {
     // setup here if necessary
     done();
   },
-  default_options: function(test) {
+  options: function(test) {
     test.expect(1);
 
     var actual = grunt.file.read('tmp/default_options');

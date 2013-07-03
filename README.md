@@ -37,17 +37,17 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
+#### options.compass
+Type: `Object`
+Default value: `{}`
 
-A string value that is used to do something with whatever.
+Object that will be used to configure the [grunt-contrib-compass](https://github.com/gruntjs/grunt-contrib-compass) task for compiling the sass the styleDocs. [Explation of grunt-contrib-compass options](https://github.com/gruntjs/grunt-contrib-compass?source=c#options)
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
+#### options.dss
+Type: `Object`
+Default value: `{ options:{}, files:{} }`
 
-A string value that is used to do something else with whatever else.
+Object that will be used to configure the [grunt-dss](https://github.com/darcyclarke/grunt-dss) task for compiling the stylesheet docs. [Explation of grunt-dss settings](https://github.com/darcyclarke/grunt-dss#settings)
 
 ### Usage Examples
 
@@ -57,28 +57,34 @@ In this example, the default options are used to do something with whatever. So 
 ```js
 grunt.initConfig({
   styleguide: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  styleguide: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
+      compass:{
+        config:  'test/config.rb',
+        sassDir: 'test/fixtures/template/assets/source',
+        cssDir:  'test/fixtures/template/assets/css' 
+      },
+      dss: {
+        options: {
+          template: 'test/fixtures/template/'
+        } 
+      }
     },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+    dev: {},
+    dist: {
+      options: {
+        compass: {
+          outputStyle:'compact',
+          noLineComments:true,
+          force:true
+        },
+        dss: {
+          files: {
+            'tmp3/':['test/fixtures/*.{css,scss,sass,less,styl}']
+          }
+        }
+      }
+    }
+  }
 })
 ```
 
