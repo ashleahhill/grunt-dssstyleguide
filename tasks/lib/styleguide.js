@@ -13,12 +13,15 @@ exports.init = function(grunt) {
 
 	// Returns a grunt-contrib-compass options object
 	exports.getCompassConfig = function(options) {
-		var config = {
-				options: {
-				},
-		};
+		var config = { options: {}, };
 
-		_.extend( config.options, options.compass );
+		_.extend(config.options, options.compass);
+
+		// Base Compass Src and Target on dssTemplate
+		if (!options.compassSourceTarget){
+			config.options.sassDir = options.dssTemplate + 'assets/source';
+			config.options.cssDir = options.dssTemplate + 'assets/css';
+		}
 
 		return config;
 	};
@@ -26,22 +29,19 @@ exports.init = function(grunt) {
 	// Returns a grunt-dss options object
 	exports.getDssConfig = function(options) {
 		var config = {
-				options: {
-					template: 'template/',
-					parsers: {
-						state: dssParsers.state,
-						link: dssParsers.link,
-					}
-				},
-				files: {},
+			options: {
+				template: options.dssTemplate,
+				parsers: {
+					state: dssParsers.state,
+					link: dssParsers.link,
+				}
+			},
+			files: {},
 		};
 
-		_.extend( config.options, options.dss );
-		
-		// Replace files
-		if(Object.keys(options.dssFiles).length > 0){
-			config.files = options.dssFiles;
-		}
+		config.files[options.dssTarget] = options.dssFiles;
+
+		_.extend( config.options.parsers, options.dssParsers );
 
 		return config;
 	};

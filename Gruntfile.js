@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 			],
 			options: {
 				jshintrc: '.jshintrc',
-			}
+			},
 		},
 
 		// Before generating any new files, remove any previously-created files.
@@ -33,44 +33,36 @@ module.exports = function(grunt) {
 		// Configuration to be run (and then tested).
 		styleguide: {
 			options: {
-				taskTarget: 'poop',
-				testOption:'two',
-				compass: {
-					config: 'test/config.rb',
-					sassDir: 'test/fixtures/template/assets/source',
-					cssDir: 'test/fixtures/template/assets/css',
-					force: true
-				},
-				dss: {
-					template: 'test/fixtures/template/'
-				},
-				dssFiles: {
-					'tmp_dev/': ['test/fixtures/*.{css,scss,sass,less,styl}']
+				dssTemplate: 'test/fixtures/template/',
+				dssTarget: 'tmp_dev/',
+				dssFiles: ['test/fixtures/*.{css,scss,sass,less,styl}'],
+			},
+			dev: {
+				options: {
+					compass: {
+						config: 'test/config.rb',
+						force: true,
+					},
 				},
 			},
-			dev: {},
 			dist: {
 				options: {
 					taskTarget: 'faraaaaang',
 					compass: {
 						config: 'test/config.rb',
-						sassDir: 'test/fixtures/template/assets/source',
-						cssDir: 'test/fixtures/template/assets/css',
-						force: true,
 						outputStyle: 'compact',
 						noLineComments: true,
+						force: true,
 					},
-					dssFiles: {
-						'tmp_dist/': ['test/fixtures/*.{css,scss,sass,less,styl}']
-					},
+					dssTarget: 'tmp_dist/',
 				},
 			},
 		},
 
 		// Unit tests.
 		nodeunit: {
-			tests: ['test/*_test.js']
-		}
+			tests: ['test/*_test.js'],
+		},
 
 	});
 

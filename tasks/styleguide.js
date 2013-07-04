@@ -26,13 +26,19 @@ module.exports = function(grunt) {
 		var options = this.options(
 			{
 				taskTarget: 'styledocs',
-				testOption: 'three',
-				compass: {
-					config: 'config.rb',
-				},
+				compassSourceTarget: false, 
+				compass: { config: 'config.rb'},
+				dssTemplate: 'dssTemplate/',
+				dssTarget: 'styledocs/',
+				dssFiles: [],
+				dssParsers: {}
 			}
 		);
-		
+
+		// Require that dss template, target, & files be set
+
+
+		grunt.verbose.writeflags(options, 'Options');
 		grunt.log.write('Generating style documentation: "' + this.target + '"...');
 
 		var compassConfig = styleguide.getCompassConfig(options);

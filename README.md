@@ -37,53 +37,90 @@ grunt.initConfig({
 
 ### Options
 
+#### options.taskTarget
+Type: `String`
+Default value: `styledocs`
+
+Name for the target value of the new tasks. Use if you have conflicting compass or dss target already in your Gruntfile;
+
 #### options.compass
+Type: `Object`
+Default value: `{config: 'config.rb',}`
+
+Object that will be used to configure the [grunt-contrib-compass](https://github.com/gruntjs/grunt-contrib-compass) task for compiling the SASS files for the [grunt-dss template](https://github.com/darcyclarke/grunt-dss#optionstemplate). 
+
+[Explation of grunt-contrib-compass options](https://github.com/gruntjs/grunt-contrib-compass?source=c#options)
+
+#### options.compassSourceTarget
+Type: `Boolean`
+Default value: `false`
+
+By default the Compass `css_dir` and `sass_dir` will be set relative to the `dssTemplate` value, as `[dssTemplate]assets/source` and  `[dssTemplate]assets/css`. Set this to `true` to repect the `options.compass.cssDir` and `options.compass.sassDir` settings instead.
+
+#### options.dssTemplate _Required_
+Type: `String`
+Default value: `dssTemplate/`
+
+Path to the template you want to use with [grunt-dss](https://github.com/darcyclarke/grunt-dss) to document.
+
+#### options.dssTarget _Required_
+Type: `String`
+Default value: `styledocs/`
+
+Folder where [grunt-dss](https://github.com/darcyclarke/grunt-dss) outputs.
+
+#### options.dssFiles _Required_
+Type: `Array`
+Default value: `[]`
+
+Files array of the css files you want [grunt-dss](https://github.com/darcyclarke/grunt-dss) to document.
+
+#### options.dssParsers
 Type: `Object`
 Default value: `{}`
 
-Object that will be used to configure the [grunt-contrib-compass](https://github.com/gruntjs/grunt-contrib-compass) task for compiling the sass the styleDocs. [Explation of grunt-contrib-compass options](https://github.com/gruntjs/grunt-contrib-compass?source=c#options)
-
-#### options.dss
-Type: `Object`
-Default value: `{ options:{}, files:{} }`
-
-Object that will be used to configure the [grunt-dss](https://github.com/darcyclarke/grunt-dss) task for compiling the stylesheet docs. [Explation of grunt-dss settings](https://github.com/darcyclarke/grunt-dss#settings)
+Custom [DSS](https://github.com/darcyclarke/DSS) parsers. This task already has a few.
 
 ### Usage Examples
 
 #### Default Options
+Requrired Config
+
+```js
+grunt.initConfig({
+  styleguide: {
+    dev: {
+      dssTemplate: 'source/dssTemplate/',
+      dssTarget: 'docs/dssDocs/',
+      dssFiles: ['test/fixtures/*.{css,scss,sass,less,styl}'],
+    },
+  },
+})
+```
+
+#### Custom Options
 
 ```js
 grunt.initConfig({
   styleguide: {
     options: {
-      compass:{
-        config:  'test/config.rb',
-        sassDir: 'test/fixtures/template/assets/source',
-        cssDir:  'test/fixtures/template/assets/css' 
-      },
-      dss: {
-        options: {
-          template: 'test/fixtures/template/'
-        } 
-      }
+      taskTarget: 'dssDocs',
+      dssTemplate: 'source/dssTemplate/',
+      dssTarget: 'docs/dssDocs/',
+      dssFiles: ['test/fixtures/*.{css,scss,sass,less,styl}'],
     },
     dev: {},
     dist: {
       options: {
         compass: {
-          outputStyle:'compact',
-          noLineComments:true,
-          force:true
+          config: 'config.rb'
+          outputStyle: 'compact',
+          noLineComments: true,
+          force: true,
         },
-        dss: {
-          files: {
-            'tmp3/':['test/fixtures/*.{css,scss,sass,less,styl}']
-          }
-        }
-      }
-    }
-  }
+      },
+    },
+  },
 })
 ```
 
