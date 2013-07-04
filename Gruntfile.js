@@ -32,44 +32,37 @@ module.exports = function(grunt) {
 
 		// Configuration to be run (and then tested).
 		styleguide: {
-			dev: {
-				options: {
-					compass: {
-						config: 'test/config.rb',
-						sassDir: 'test/fixtures/template/assets/source',
-						cssDir: 'test/fixtures/template/assets/css',
-						force: true
-					},
-					dss: {
-						options: {
-							template: 'test/fixtures/template/'
-						},
-						files: {
-							'tmp_dev/': ['test/fixtures/*.{css,scss,sass,less,styl}']
-						}
-					}
-				}
+			options: {
+				testOption:'two',
+				compass: {
+					config: 'test/config.rb',
+					sassDir: 'test/fixtures/template/assets/source',
+					cssDir: 'test/fixtures/template/assets/css',
+					force: true
+				},
+				dss: {
+					template: 'test/fixtures/template/'
+				},
+				dssFiles: {
+					'tmp_dev/': ['test/fixtures/*.{css,scss,sass,less,styl}']
+				},
 			},
+			dev: {},
 			dist: {
 				options: {
 					compass: {
 						config: 'test/config.rb',
 						sassDir: 'test/fixtures/template/assets/source',
 						cssDir: 'test/fixtures/template/assets/css',
+						force: true,
 						outputStyle: 'compact',
 						noLineComments: true,
-						force: true
 					},
-					dss: {
-						options: {
-							template: 'test/fixtures/template/'
-						},
-						files: {
-							'tmp_dist/': ['test/fixtures/*.{css,scss,sass,less,styl}']
-						}
-					}
-				}
-			}
+					dssFiles: {
+						'tmp_dist/': ['test/fixtures/*.{css,scss,sass,less,styl}']
+					},
+				},
+			},
 		},
 
 		// Unit tests.

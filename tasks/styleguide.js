@@ -8,67 +8,41 @@
 
 'use strict';
 
-var _ = require('underscore'); 
 
 //https://github.com/gruntjs/grunt/wiki/Inside-Tasks
 module.exports = function(grunt) {
 
-	var dssParsers = require('./lib/dssParsers');
+	var styleguide = require('./lib/styleguide').init(grunt);
 
-
+	// Load the necessary tasks
 	grunt.loadNpmTasks('grunt-dss');
 	grunt.loadNpmTasks('grunt-contrib-compass');
 
-	grunt.registerMultiTask('styleguide', 'Lazily Make a StyleGuide', function(requested) {
-
-		var compassStyleDocs = {
-			styleDocs: {
-				options: {
-					config: 'config.rb'
-				}
-			}
-		};
-
-		var dssStyleDocs = {
-			styleDocs: {
-				options: {
-					template: 'template/',
-					parsers: {
-						//default additional parsers are in ./lib/dssParsers
-						state: dssParsers.state,
-						link: dssParsers.link
-					}
-				},
-				files: {}
-			}
-		};
+	// Register styleguide task
+	grunt.registerMultiTask('styleguide', 'Lazily Make a StyleGuide', function() {
 
 		// Merge task-specific and/or target-specific options with these defaults.
-		var options = this.options({
-			compass: {},
-			dss: {
-				options: {},
-				files: {}
+		var options = this.options(
+			{
+				testOption: 'three',
+				compass: {
+					config: 'config.rb',
+				},
 			}
-		});
+		);
 		
-		// console.log(this.target);
-		
-		// Extend the task options
-		_.extend( compassStyleDocs.styleDocs.options, options.compass );
-		_.extend( dssStyleDocs.styleDocs.options, options.dss.options );
+		grunt.log.ok('Generating Style Documentation: ' + this.target);
+		grunt.verbose.writelns(options);
 
-		// Replace files
-		if(Object.keys(options.dss.files).length > 0){
-			dssStyleDocs.styleDocs.files = options.dss.files;
-		}
+		var compassConfig = styleguide.getCompassConfig(options);
+		var dssConfig = styleguide.getDssConfig(options);
 
 		// http://integralist.co.uk/Using-Grunts-Config-API.html
 		// Set the new configurations
-		grunt.config.set('compass',compassStyleDocs);
-		grunt.config.set('dss',dssStyleDocs);
+		grunt.config.set('compass', compassConfig);
+		grunt.config.set('dss', dssConfig);
 
-		// run the new tasks
+		// Run the new targets
 		grunt.task.run('compass:styleDocs');
 		grunt.task.run('dss:styleDocs');
 
