@@ -14,13 +14,11 @@ exports.init = function(grunt) {
 	// Returns a grunt-contrib-compass options object
 	exports.getCompassConfig = function(options) {
 		var config = {
-			styleDocs: {
 				options: {
 				},
-			},
 		};
-		
-		_.extend( config.styleDocs.options, options.compass );
+
+		_.extend( config.options, options.compass );
 
 		return config;
 	};
@@ -28,7 +26,6 @@ exports.init = function(grunt) {
 	// Returns a grunt-dss options object
 	exports.getDssConfig = function(options) {
 		var config = {
-			styleDocs: {
 				options: {
 					template: 'template/',
 					parsers: {
@@ -36,15 +33,14 @@ exports.init = function(grunt) {
 						link: dssParsers.link,
 					}
 				},
-				files: {}
-			}
+				files: {},
 		};
 
-		_.extend( config.styleDocs.options, options.dss );
+		_.extend( config.options, options.dss );
 		
 		// Replace files
 		if(Object.keys(options.dssFiles).length > 0){
-			config.styleDocs.files = options.dssFiles;
+			config.files = options.dssFiles;
 		}
 
 		return config;

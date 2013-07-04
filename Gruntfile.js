@@ -33,6 +33,7 @@ module.exports = function(grunt) {
 		// Configuration to be run (and then tested).
 		styleguide: {
 			options: {
+				taskTarget: 'poop',
 				testOption:'two',
 				compass: {
 					config: 'test/config.rb',
@@ -50,6 +51,7 @@ module.exports = function(grunt) {
 			dev: {},
 			dist: {
 				options: {
+					taskTarget: 'faraaaaang',
 					compass: {
 						config: 'test/config.rb',
 						sassDir: 'test/fixtures/template/assets/source',
