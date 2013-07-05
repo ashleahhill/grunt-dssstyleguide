@@ -8,69 +8,70 @@
 
 'use strict';
 
-var _ = require('underscore'); 
 
 //https://github.com/gruntjs/grunt/wiki/Inside-Tasks
 module.exports = function(grunt) {
 
-	var dssParsers = require('./lib/dssParsers');
+	var _ = require('underscore');
+	var styleguide = require('./lib/styleguide').init(grunt);
 
-
+	// Load the necessary tasks
 	grunt.loadNpmTasks('grunt-dss');
 	grunt.loadNpmTasks('grunt-contrib-compass');
 
-	grunt.registerMultiTask('styleguide', 'Lazily Make a StyleGuide', function(requested) {
-
-		var compassStyleDocs = {
-			styleDocs: {
-				options: {
-					config: 'config.rb'
-				}
-			}
-		};
-
-		var dssStyleDocs = {
-			styleDocs: {
-				options: {
-					template: 'template/',
-					parsers: {
-						//default additional parsers are in ./lib/dssParsers
-						state: dssParsers.state,
-						link: dssParsers.link
-					}
-				},
-				files: {}
-			}
-		};
+	// Register styleguide task
+	grunt.registerMultiTask('styleguide', 'Lazily Make a StyleGuide', function() {
 
 		// Merge task-specific and/or target-specific options with these defaults.
-		var options = this.options({
-			compass: {},
-			dss: {
-				options: {},
-				files: {}
+		var options = this.options(
+			{
+				taskTarget: 'styledocs',
+				compassSourceTarget: false, 
+				compass: { config: 'config.rb'},
+				dssTemplate: 'dssTemplate/',
+				dssTarget: 'styledocs/',
+				dssFiles: [],
+				dssParsers: {}
 			}
-		});
-		
-		// console.log(this.target);
-		
-		// Extend the task options
-		_.extend( compassStyleDocs.styleDocs.options, options.compass );
-		_.extend( dssStyleDocs.styleDocs.options, options.dss.options );
+		);
 
-		// Replace files
-		if(Object.keys(options.dss.files).length > 0){
-			dssStyleDocs.styleDocs.files = options.dss.files;
-		}
+		// Require that dss template, target, & files be set
+
+
+		grunt.verbose.writeflags(options, 'Options');
+		grunt.log.write('Generating style documentation: "' + this.target + '"...');
+
+		var compassConfig = styleguide.getCompassConfig(options);
+		var dssConfig = styleguide.getDssConfig(options);
 
 		// http://integralist.co.uk/Using-Grunts-Config-API.html
 		// Set the new configurations
-		grunt.config.set('compass',compassStyleDocs);
-		grunt.config.set('dss',dssStyleDocs);
+		function extendOrCreateTask(taskName, config){
+			var wrapper = {};
+			var currentConfig = grunt.config.get(taskName);
+			
+			taskName.toString();
+			
+			grunt.verbose.write('Creating task ' + taskName + ':' + options.taskTarget + '...');
+			
+			wrapper[options.taskTarget] = config;
+			
+			if(!!currentConfig){
+				// There is already a taskName task
+				wrapper = _.extend({},currentConfig, wrapper);
+			}
+			grunt.verbose.ok();
 
-		// run the new tasks
-		grunt.task.run('compass:styleDocs');
-		grunt.task.run('dss:styleDocs');
+			grunt.config.set(taskName, wrapper);
+			grunt.task.run(taskName + ':' + options.taskTarget);
+			
+			grunt.verbose.oklns('Task ' + taskName + ':' + options.taskTarget + ' triggered.');
+		}
+
+		extendOrCreateTask('compass', compassConfig);
+		extendOrCreateTask('dss', dssConfig);
+
+		grunt.log.ok();
 
 	});
 
